@@ -17,7 +17,7 @@ export class VaccineController {
     this.validator = createValidator();
     this.vaccineService = new VaccineService(appDataSource);
     this.router.get('/vaccine-summary', this.validator.query(vaccineSummaryQuerySchema), async (request: VaccineSummaryRequest, response: Response) => this.getVaccines(request, response));
-    this.router.get('/vaccine-seed', async (request: Request, response: Response) => this.getSeedData(request, response));
+    this.router.post('/vaccine-seed', async (request: Request, response: Response) => this.seedData(request, response));
     console.info('VaccineController initialized');
   }
 
@@ -38,9 +38,9 @@ export class VaccineController {
     });
   }
 
-  async getSeedData(request: Request, response: Response): Promise<void> {
+  async seedData(request: Request, response: Response): Promise<void> {
     const data: VaccineDataResponse = JSON.parse(fs.readFileSync('data.json', 'utf-8'));
-    const count = await this.vaccineService.seedData(data.records);
+    const count = await this.vaccineService.insertData(data.records);
     response.status(StatusCodes.OK).json({
       inserted: count,
     });

@@ -21,7 +21,7 @@ export async function initTestApp(): Promise<TestApp> {
 }
 
 export const seed = async <T>(repository: MongoRepository<T>): Promise<void> => {
-  const data: VaccineDataResponse = JSON.parse(fs.readFileSync('data.json', 'utf-8'));
+  const data: VaccineDataResponse = JSON.parse(fs.readFileSync('test/test-data.json', 'utf-8'));
   await repository.insertMany(data.records);
 };
 

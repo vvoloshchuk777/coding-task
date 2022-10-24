@@ -41,7 +41,7 @@ export class VaccineService {
       .toArray();
   }
 
-  async seedData(data: VaccineEntityPayload[]): Promise<number> {
+  async insertData(data: VaccineEntityPayload[]): Promise<number> {
     await this.vaccineRepository.insertMany(data);
     return await this.vaccineRepository.count();
   }
